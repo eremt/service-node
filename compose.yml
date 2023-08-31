@@ -1,0 +1,11 @@
+services:
+  service-node:
+    container_name: service-node
+    build:
+      context: .
+    env_file: .env
+    volumes:
+      - .:/app
+    ports:
+      - ${PORT}:${PORT}
+    command: npm run dev
