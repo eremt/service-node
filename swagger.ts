@@ -21,7 +21,7 @@ const swaggerSpec = swaggerJsDoc({
     },
     basePath: '/',
   },
-  apis: ['./src/controllers/*.ts'],
+  apis: ['./src/controllers/*.ts', './src/utils/responses.ts'],
 })
 
 export default swaggerSpec

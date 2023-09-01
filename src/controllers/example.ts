@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { NO_CONTENT } from '../utils/responses'
 import ExampleService from '../services/example'
 
 /**
@@ -53,6 +54,8 @@ export default class ExampleController {
    *           application/json:
    *             schema:
    *               $ref: '#/components/examplesResponse'
+   *       500:
+   *         $ref: '#/components/internalServerError'
    */
   static async get (_: Request, res: Response) {
     const result = await ExampleService.get()
@@ -82,6 +85,10 @@ export default class ExampleController {
    *           application/json:
    *             schema:
    *               $ref: '#/components/exampleResponse'
+   *       404:
+   *         $ref: '#/components/notFound'
+   *       500:
+   *         $ref: '#/components/internalServerError'
    */
   static async getById (_: Request, res: Response) {
     const result = await ExampleService.getById()
@@ -108,6 +115,8 @@ export default class ExampleController {
    *           application/json:
    *             schema:
    *               $ref: '#/components/exampleResponse'
+   *       500:
+   *         $ref: '#/components/internalServerError'
    */
   static async post (_: Request, res: Response) {
     const result = await ExampleService.create()
@@ -137,6 +146,10 @@ export default class ExampleController {
    *           application/json:
    *             schema:
    *               $ref: '#/components/exampleResponse'
+   *       404:
+   *         $ref: '#/components/notFound'
+   *       500:
+   *         $ref: '#/components/internalServerError'
    */
   static async put (_: Request, res: Response) {
     const result = await ExampleService.update()
@@ -161,10 +174,14 @@ export default class ExampleController {
    *
    *     responses:
    *       204:
-   *         description: Successful request
+   *         $ref: '#/components/noContent'
+   *       404:
+   *         $ref: '#/components/notFound'
+   *       500:
+   *         $ref: '#/components/internalServerError'
    */
   static async delete (_: Request, res: Response) {
-    const result = await ExampleService.delete()
-    res.json(result)
+    await ExampleService.delete()
+    res.status(NO_CONTENT.code).end()
   }
 }
