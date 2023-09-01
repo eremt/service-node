@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { NO_CONTENT } from '../utils/responses'
+import { NO_CONTENT, NOT_FOUND } from '../utils/responses'
 import ExampleService from '../services/example'
 
 /**
@@ -90,8 +90,10 @@ export default class ExampleController {
    *       500:
    *         $ref: '#/components/internalServerError'
    */
-  static async getById (_: Request, res: Response) {
-    const result = await ExampleService.getById()
+  static async getById (req: Request, res: Response) {
+    const { id } = req.params
+    const result = await ExampleService.getById(id)
+    if (!result) return res.status(NOT_FOUND.code).json(NOT_FOUND)
     res.json(result)
   }
 
@@ -118,8 +120,9 @@ export default class ExampleController {
    *       500:
    *         $ref: '#/components/internalServerError'
    */
-  static async post (_: Request, res: Response) {
-    const result = await ExampleService.create()
+  static async post (req: Request, res: Response) {
+    const { value } = req.body
+    const result = await ExampleService.create({ value })
     res.json(result)
   }
 
@@ -138,6 +141,11 @@ export default class ExampleController {
    *           id:
    *             type: string
    *             format: uuid
+   *     requestBody:
+   *       content:
+   *         application/json:
+   *           schema:
+   *             $ref: '#/components/exampleRequest'
    *
    *     responses:
    *       200:
@@ -151,8 +159,11 @@ export default class ExampleController {
    *       500:
    *         $ref: '#/components/internalServerError'
    */
-  static async put (_: Request, res: Response) {
-    const result = await ExampleService.update()
+  static async put (req: Request, res: Response) {
+    const { id } = req.params
+    const { value } = req.body
+    const result = await ExampleService.update(id, { value })
+    if (!result) return res.status(NOT_FOUND.code).json(NOT_FOUND)
     res.json(result)
   }
 
@@ -180,8 +191,10 @@ export default class ExampleController {
    *       500:
    *         $ref: '#/components/internalServerError'
    */
-  static async delete (_: Request, res: Response) {
-    await ExampleService.delete()
+  static async delete (req: Request, res: Response) {
+    const { id } = req.params
+    const result = await ExampleService.delete(id)
+    if (!result) return res.status(NOT_FOUND.code).json(NOT_FOUND)
     res.status(NO_CONTENT.code).end()
   }
 }

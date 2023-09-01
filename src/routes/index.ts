@@ -11,7 +11,7 @@ const appInfo = {
 router.get('/', (_: Request, res: Response) => res.json(appInfo))
 
 import example from './example'
-router.use('/example', example)
+router.use('/examples', example)
 
 // mount documentation if development
 import swaggerUi from 'swagger-ui-express'
