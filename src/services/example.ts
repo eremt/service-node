@@ -1,5 +1,11 @@
 import { randomUUID } from 'crypto'
-const examples: any = {}
+
+type Example = {
+  id: string,
+  created: number,
+  value: string,
+}
+const examples: { [key: string]: Example } = {}
 
 export default class ExampleService {
   static async get () {
@@ -16,7 +22,8 @@ export default class ExampleService {
   static async create (data: any) {
     const { value } = data
     const id = randomUUID()
-    const example = { id, value }
+    const created = Date.now()
+    const example = { id, created, value }
     examples[id] = example
     return example
   }
