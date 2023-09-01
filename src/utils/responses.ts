@@ -1,4 +1,6 @@
 /**
+ * TODO: investigate why this still shows example response in swagger-ui
+ *
  * @openapi
  * components:
  *   noContent:
