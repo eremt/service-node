@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon src/index.ts",
-    "test": "jest"
+    "test": "npm run test:unit",
+    "test:unit": "jest"
   },
   "repository": {
     "type": "git",
