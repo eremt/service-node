@@ -1,21 +1,10 @@
-import express, { Request, Response } from 'express'
+import express from 'express'
+import ExampleController from '../controllers/example'
 const router = express.Router()
 
-router.get('/', (req: Request, res: Response) => {
-  const { method } = req
-  res.json({ code: '200', method })
-})
-router.post('/', (req: Request, res: Response) => {
-  const { method } = req
-  res.json({ code: '200', method })
-})
-router.put('/', (req: Request, res: Response) => {
-  const { method } = req
-  res.json({ code: '200', method })
-})
-router.delete('/', (req: Request, res: Response) => {
-  const { method } = req
-  res.json({ code: '200', method })
-})
+router.get('/', ExampleController.get)
+router.post('/', ExampleController.post)
+router.put('/', ExampleController.put)
+router.delete('/', ExampleController.delete)
 
 export default router
