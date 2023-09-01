@@ -3,6 +3,7 @@ services:
     container_name: service-node
     build:
       context: .
+      target: base
     env_file: .env
     volumes:
       - .:/app
